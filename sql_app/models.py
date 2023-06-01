@@ -10,6 +10,7 @@ class Bots(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     token = Column(String, unique=True)
+    name = Column(String,default="Name")
 
 
     # items = relationship("Item", back_populates="owner")

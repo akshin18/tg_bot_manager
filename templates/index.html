@@ -1,28 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='bots.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='adder.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='users.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='sender.css') }}">
     <title>Document</title>
 </head>
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 {% raw %}
+
 <body>
-    
+
     <div id="wrapper">
         <header></header>
         <section>
-            <!-- <div class="container">
-                {{ test }}
-            </div> -->
+            <div class="container">
+                <div class="bots_container">
+                    <div class="bots_text">Боты</div>
+                    <div class="b_container">
+                        <div class="bot_header">
+                            <div class="b_h_1">Name</div>
+                            <div class="b_h_2">Subs</div>
+                        </div>
+                        <div v-for="i in bots" @click="user_list(i.id,0)" class="bot">
+                            <div class="b_b_1">
+                                <h1>{{i.name}}</h1>
+                            </div>
+                            <div class="b_b_2">
+                                <h1>{{i.subs}}</h1>
+                            </div>
+                        </div>
+
+                        <div class="plus">
+                            <!-- <div class="add_bot"></div> -->
+                            <img @click="quit_add_bot(1)" width="60" height="60"
+                                src="https://img.icons8.com/color/96/add--v1.png" alt="add--v1" />
+                            <img width="60" height="60" src="https://img.icons8.com/color/96/sent--v2.png"
+                                alt="sent--v2" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container_2">
+                <!-- v-if="users_s == 1" -->
+                <div class="users_list">
+                    <div class="users_header">Users</div>
+                    <div class="users_category">
+                        <div class="u_h_1">Username</div>
+                        <div class="u_h_2">Id</div>
+                    </div>
+                    <div class="users" v-for="user in users">
+                        <div class="u_b_1">{{user.username}}</div>
+                        <div class="u_b_2">{{user.id}}</div>
+                    </div>
+                    <div class="pagination">
+                        <div @click="users_page(0)" class="pag">
+                            <</div> <div @click="users_page(1)" class="pag">>
+                        </div>
+                    </div>
+                    <div @click="quit_users(0)" class="quiter">
+                        <div class="add_bot_quit"></div>
+                    </div>
+                </div>
+                <!-- v-if="add_bot_wuit_s == 1" -->
+                <div class="adder_frame">
+                    <div class="a_i_container">
+                        <input class="name adder_input" v-model="name_input" placeholder="Bot Name" type="text">
+                    </div>
+                    <div class="a_i_container">
+                        <input class="token adder_input" v-model="token_input" placeholder="Bot Token" type="text">
+                    </div>
+                    <div class="a_i_container">
+                        <button @click="add_bot" class="add_bot_button">Add</button>
+                    </div>
+                    <div @click="quit_add_bot(0)" class="quiter">
+                        <div class="add_bot_quit"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container_3">
+                <div class="sender_container">
+                    <div class="sender_wrap">
+                        <div class="memo_type">
+                            <textarea rows="4" cols="50" class="text_input"></textarea>
+                        </div>
+                        <div class="check_type"></div>
+                    </div>
+                </div>
+            </div>
+
         </section>
+
+
+
+
         <footer></footer>
     </div>
-    
+
 </body>
 {% endraw %}
 <script src="{{ url_for('static', path='main.js') }}"></script>
+
 </html>

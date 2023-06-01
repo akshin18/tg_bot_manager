@@ -1,0 +1,33 @@
+.sender_container{
+    flex: 0.8;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px black solid;
+    display: flex;
+}
+
+.sender_wrap{
+    flex: 0.5;
+    display: flex;
+    flex-direction: column;
+}
+
+.memo_type{
+    background-color: red;
+    flex: 0.7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.check_type{
+    background-color: blue;
+    flex: 0.3;
+}
+
+.text_input{
+    flex: 0.8;
+    width: 80%;
+    outline: none;
+}

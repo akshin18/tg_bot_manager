@@ -37,10 +37,14 @@ async def root(request: Request):
 
 @app.get("/get_bots",response_model=list[schemas.Bots])
 async def get_bots(db: Session = Depends(get_db)):
-    print(crud.get_bots(db))
     return crud.get_bots(db)
+@app.get("/get_users",response_model=list[schemas.Users])
+async def get_users(id:int,ofset:int,db: Session = Depends(get_db)):
+    return crud.get_users(db,id,ofset)
 
-
+@app.post("/add_bot")
+async def add_bot(item:schemas.AddBotSchema,db: Session = Depends(get_db)):
+    return crud.add_bot(db,item.token,item.name)
 
 def start_server():
 
