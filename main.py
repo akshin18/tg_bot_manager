@@ -1,26 +1,46 @@
-import uvicorn
-import os
-import webbrowser
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from pathlib import Path
+import uvicorn
 
-app = FastAPI(
-    description="This is to test",
+from sql_app import models, schemas, crud
+from sql_app.db import SessionLocal, engine
+from sqlalchemy.orm import Session
+
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
+app.mount(
+    "/static",
+    StaticFiles(directory= "static"),
+    name="static",
 )
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=['*'],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+templates = Jinja2Templates(directory="templates")
 
-static_dir = os.path.join(os.path.dirname(__file__), "static")
-app.mount("/",StaticFiles(directory=static_dir, html=True),name="static")
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.get("/")
+async def root(request: Request):
+    return templates.TemplateResponse(
+        "index.html", {"request": request}
+    )
+
+
+@app.get("/get_bots",response_model=list[schemas.Bots])
+async def get_bots(db: Session = Depends(get_db)):
+    print(crud.get_bots(db))
+    return crud.get_bots(db)
+
+
 
 def start_server():
 
@@ -31,6 +51,10 @@ def start_server():
         log_level="debug",
         reload=True,
     )
+
+
+
+
 
 if __name__ == "__main__":
     start_server()

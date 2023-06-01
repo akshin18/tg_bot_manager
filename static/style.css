@@ -1,5 +1,24 @@
-.test{
-    width: 100px;
-    height: 100px;
-    background-color: red;
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header{
+    background-color: gray;
+    height: 50px;
+}
+
+section{
+    flex: 1;
+}
+
+footer{
+    background-color: gray;
+    height: 50px;
 }
